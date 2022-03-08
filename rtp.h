@@ -11,8 +11,8 @@
   
 #define PACKET_BUFFER_END      (unsigned int)0x00000000   
 #define MAX_RTP_PKT_LENGTH     1400  
-#define DEST_IP                "192.168.0.108" /* 显示端 IP 地址 */ 
-#define DEST_PORT              6666 
+#define DEST_IP                "127.0.0.1" /* 显示端 IP 地址 */ 
+#define DEST_PORT              5004 
 #define H264                   96  
   
 typedef int SOCKET;  

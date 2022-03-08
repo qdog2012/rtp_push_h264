@@ -189,8 +189,14 @@ void dump(NALU_t *n)
     printf("nal_unit_type: %x\n", n->nal_unit_type);  
 }  
 
-int main(int argc, char* argv[])  
+int main(int argc, char **argv)  
 {  
+
+    if (argc < 3) {
+        fprintf(stderr, "usage: %s <inputfile> <dstip> [dst_port]\n", argv[0]);
+        return -1;
+    }
+
     //FILE *stream;  
     //stream=fopen("Test.264", "wb");  
     NALU_t *n;
@@ -206,11 +212,13 @@ int main(int argc, char* argv[])
     struct sockaddr_in server;  
 
     len = sizeof(server);
-    OpenBitstreamFile("./h264/test.h264");
+    OpenBitstreamFile(argv[1]);
     timestamp_increase = (unsigned int)(90000.0 / framerate); //+0.5);  
     server.sin_family = AF_INET;  
-    server.sin_port = htons(DEST_PORT);            
-    server.sin_addr.s_addr = inet_addr(DEST_IP);   
+    //server.sin_port = htons(DEST_PORT);            
+    //server.sin_addr.s_addr = inet_addr(DEST_IP);   
+    server.sin_port = htons(atoi(argv[3]));
+    server.sin_addr.s_addr = inet_addr(argv[2]);
     socket1 = socket(AF_INET, SOCK_DGRAM, 0);  
 
     n = AllocNALU(8000000);//为结构体nalu_t及其成员buf分配空间。返回值为指向nalu_t存储空间的指针  
